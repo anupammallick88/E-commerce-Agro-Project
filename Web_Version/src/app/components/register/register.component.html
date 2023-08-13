@@ -1,0 +1,90 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+  <div mdbModal #frame="mdbModal" class="modal fade center" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999;"
+    [config]="{backdrop: true, ignoreBackdropClick: true}">
+    <div class="modal-dialog modal-notify modal-success" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="heading lead" style="text-align: center;"> {{util.getString('Verify')}} </p>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+            <span aria-hidden="true" class="white-text">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row d-flex justify-content-center align-items-center">
+          </div>
+
+          <div>
+
+            <div class="contents">
+              <h2 class="headerText">{{util.getString('Verification')}} </h2>
+              <p class="subTitleText">{{util.getString('We texted you a code to verify')}}
+                <br> {{util.getString('your phone')}} {{umobile}}
+              </p>
+              <div class="otpInputs">
+                <ng-otp-input (onInputChange)="onOtpChange($event)"
+                  [config]="{length:6,inputStyles:{'width': '30px','height': '30px'}}">
+                </ng-otp-input>
+              </div>
+
+              <button type="button" class="btn btn-link" (click)="resend()"> {{util.getString('Resend code')}} </button>
+            </div>
+          </div>
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <a type="button" mdbBtn color="primary" class="waves-light" mdbWavesEffect
+            (click)="continue()">{{util.getString('Submit')}}
+          </a>
+        </div>
+
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+  <div class="row form_row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+
+      <div class="form_div">
+
+        <div class="head_title">
+          <label>{{util.getString('Create Account')}} </label>
+        </div>
+        <input type="email" [(ngModel)]="email" [placeholder]="util.getString('Email')" class="form-control">
+        <input type="password" [(ngModel)]="password" [placeholder]="util.getString('Password')" class="form-control">
+        <input type="text" [(ngModel)]="fname" [placeholder]="util.getString('First Name')" class="form-control">
+        <input type="text" [(ngModel)]="lname" [placeholder]="util.getString('Last Name')" class="form-control">
+        <input type="text" [(ngModel)]="cc" (ngModelChange)="onCountryInput($event)"
+          [placeholder]="util.getString('Select your Country')" class="form-control">
+        <div *ngFor="let item of countries" class="cCode" (click)="selectedCC(item)">
+          <p class="ccLbl">+{{item.dialling_code}} {{item.country_name}}</p>
+        </div>
+        <input type="number" [(ngModel)]="mobile" [placeholder]="util.getString('Mobile')" class="form-control">
+        <select class="browser-default custom-select" [(ngModel)]="gender">
+          <option value="1">{{util.getString('Male')}} </option>
+          <option value="0">{{util.getString('Female')}} </option>
+          <option value="2">{{util.getString('Others')}} </option>
+        </select>
+        <button type="button" class="btn" (click)="goToHome()">{{util.getString('Create Account')}} </button>
+
+        <hr>
+
+        <label class="bottom_lbl" (click)="goToLogin()">{{util.getString('Already have an account ? Login')}} </label>
+
+      </div>
+
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+
+</div>

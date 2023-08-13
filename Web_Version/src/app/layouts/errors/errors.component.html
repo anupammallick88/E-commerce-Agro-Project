@@ -1,0 +1,27 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="error-template">
+        <h1>
+          {{util.getString('Oops!')}}</h1>
+        <h2>
+          {{util.getString('404 Page Not Found')}} </h2>
+        <div class="error-details">
+          {{util.getString('Sorry, an error has occured, Requested page not found!')}}
+        </div>
+        <div class="error-actions">
+          <a href="/" class="btn btn-default btn-lg">
+            {{util.getString('Back')}} </a>
+          <a href="/" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-envelope"></span> {{util.getString('Contact Support')}} </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

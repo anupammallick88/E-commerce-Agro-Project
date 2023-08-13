@@ -1,0 +1,67 @@
+/*
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+*/
+@import 'node_modules/angular2-toaster/toaster';
+
+/* You can add global styles to this file, and also import other style files */
+.navbar{
+  background-color: #45C261 !important;
+}
+body{
+  text-align: unset !important;
+}
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+.carousel-control-prev-icon{
+    background: black;
+}
+.carousel-control-next-icon{
+  background: black;
+}
+#toast-container > div{
+  background: red !important;
+}
+.footer-bottom{
+  position: fixed;
+  bottom: 0px;
+  background: white;
+  width: 100%;
+  z-index: 999;
+  border: 0.5px solid lightgray;
+  .tabs{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 15px 0px;
+    .social{
+      position: relative;
+      .cartTotal{
+        position: absolute;
+        top: -10px;
+        height: 15px;
+        width: 15px;
+        background: #f27474;
+        border-radius: 50%;
+        line-height: 15px;
+        color: white;
+        font-size: 10px;
+      }
+    }
+    a{
+      text-align: center;
+      color:#45C261;
+    }
+    .normalFont{
+      font-size: 10px;
+      font-weight: normal;
+    }
+  }
+}
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

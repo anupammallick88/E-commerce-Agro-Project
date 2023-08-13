@@ -1,0 +1,537 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container" *ngIf="cart.cart?.length">
+
+  <div mdbModal #frame="mdbModal" class="modal fade center" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999;">
+    <div class="modal-dialog modal-notify modal-success" role="document">
+      <!--Content-->
+      <div class="modal-content">
+        <!--Header-->
+        <div class="modal-header">
+          <p class="heading lead" style="text-align: center;"> {{util.getString('Pay With Stripe')}} </p>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+            <span aria-hidden="true" class="white-text">&times;</span>
+          </button>
+        </div>
+
+        <!--Body-->
+        <div class="modal-body">
+          <div class="row d-flex justify-content-center align-items-center" *ngIf="!addCard">
+            <a type="button" mdbBtn color="primary" outline="true" class="waves-light" mdbWavesEffect
+              data-dismiss="modal" (click)="addCard = true" *ngIf="cards?.length"> {{util.getString('Add New Card')}}
+            </a>
+          </div>
+          <hr *ngIf="!addCard">
+          <div *ngIf="!addCard">
+            <div class="form-check" *ngFor="let card of cards;let i = index">
+              <input type="radio" [(ngModel)]="token" class="form-check-input" [value]="card.id" [id]="card.id"
+                name="materialExampleRadios" mdbInput [checked]="card.id === token ? true:false">
+              <label class="form-check-label txtLbl" [for]="card.id"> {{card.brand}}
+                XXXX{{card.last4}} {{util.getString('Expiry')}} {{card.exp_month}} / {{card.exp_year}}
+              </label>
+            </div>
+          </div>
+          <div *ngIf="!cards?.length || addCard">
+            <!-- <input type="email" placeholder="Email" [(ngModel)]="email" class="form-control inputItem"> -->
+            <div class="md-form">
+              <input id="cnum" [(ngModel)]="cnumber" class="form-control" type="tel" autocomplete="cc-number" ccNumber
+                mdbInput>
+              <label for="cnum"> {{util.getString('Card Number')}} </label>
+            </div>
+            <div class="md-form">
+              <input id="cvc" [(ngModel)]="cvc" class="form-control" type="tel" autocomplete="off" ccCvc mdbInput>
+              <label for="cvc">{{util.getString('CVC')}} </label>
+            </div>
+            <div class="md-form">
+              <input id="date" [(ngModel)]="date" class="form-control" type="tel" autocomplete="cc-exp" ccExp mdbInput>
+              <label for="date">{{util.getString('Choose your date')}} </label>
+            </div>
+            <div class="md-form">
+              <input type="text" id="cname" class="form-control" [(ngModel)]="cname" mdbInput>
+              <label for="cname"> {{util.getString('Card holder name')}} </label>
+            </div>
+            <div class="md-form">
+              <input type="email" id="email" class="form-control" [(ngModel)]="email" mdbInput>
+              <label for="email"> {{util.getString('Email')}} </label>
+            </div>
+
+          </div>
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center" *ngIf="!addCard && cards.length">
+          <a type="button" mdbBtn color="primary" class="waves-light" mdbWavesEffect
+            (click)="payWithCard()">{{util.getString('Submit')}}
+          </a>
+        </div>
+
+        <div class="modal-footer justify-content-center" *ngIf="addCard || !cards?.length">
+          <a type="button" mdbBtn color="primary" class="waves-light" mdbWavesEffect
+            (click)="addcard()">{{util.getString('Pay')}}
+          </a>
+          <a type="button" mdbBtn color="primary" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal"
+            (click)="addCard = false;frame.hide()"> {{util.getString('Cancel')}} </a>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+
+  <div mdbModal #newAddress="mdbModal" class="modal fade center" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999;">
+    <div class="modal-dialog modal-notify modal-success" role="document">
+      <!--Content-->
+      <div class="modal-content">
+        <!--Header-->
+        <div class="modal-header">
+          <p class="heading lead" style="text-align: center;"> {{util.getString('Add New Address')}} </p>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="newAddress.hide()">
+            <span aria-hidden="true" class="white-text">&times;</span>
+          </button>
+        </div>
+
+        <!--Body-->
+        <div class="modal-body">
+
+
+          <div>
+            <div class="md-form">
+              <input id="text" [(ngModel)]="address" class="form-control" type="text" mdbInput>
+              <label for="text"> {{util.getString('LOCATIONS')}} </label>
+            </div>
+            <div class="md-form">
+              <input id="house" [(ngModel)]="house" class="form-control" type="text" mdbInput>
+              <label for="house"> {{util.getString('HOUSE / FLAT NO')}} </label>
+            </div>
+            <div class="md-form">
+              <input id="landmark" [(ngModel)]="landmark" class="form-control" type="text" mdbInput>
+              <label for="landmark"> {{util.getString('LANDMARK')}} </label>
+            </div>
+            <div class="md-form">
+              <input id="pincode" [(ngModel)]="pincode" class="form-control" type="text" mdbInput>
+              <label for="pincode"> {{util.getString('Pincode')}} </label>
+            </div>
+            <div class="md-form">
+              <select class="browser-default custom-select" [(ngModel)]="title">
+                <option value="home"> {{util.getString('HOME')}} </option>
+                <option value="work"> {{util.getString('WORK')}} </option>
+                <option value="other"> {{util.getString('OTHER')}} </option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <!--Footer-->
+
+
+        <div class="modal-footer justify-content-center">
+          <a type="button" mdbBtn color="primary" class="waves-light" mdbWavesEffect (click)="addAddress()">
+            {{util.getString('Add New Address')}}
+          </a>
+          <a type="button" mdbBtn color="primary" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal"
+            (click)="newAddress.hide()"> {{util.getString('Cancel')}} </a>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+
+  <div mdbModal #offersModal="mdbModal" class="modal fade center" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999;">
+    <div class="modal-dialog modal-notify modal-success" role="document">
+      <!--Content-->
+      <div class="modal-content">
+        <!--Header-->
+        <div class="modal-header">
+          <p class="heading lead" style="text-align: center;"> {{util.getString('Apply Coupon')}} </p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="offersModal.hide()">
+            <span aria-hidden="true" class="white-text">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let item of offers" (click)="selectedOffers(item)">
+            <p class="couponDesc">
+              <span class="code"> {{util.getString('Use coupon code')}} {{item.name}} </span> <br>
+              <span class="desc"> {{item.descriptions}} </span> <br>
+              <span class="desc"> {{util.getString('Valid until')}} {{getTime(item.date_time)}} </span> <br>
+            </p>
+          </div>
+        </div>
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <a type="button" mdbBtn color="primary" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal"
+            (click)="offersModal.hide()"> {{util.getString('Cancel')}} </a>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-9 col-12">
+      <div class="bottoms">
+        <ul>
+          <li [ngClass]="selected=== 1 ?'selectedHeaderItem':'headerItem'">
+            {{util.getString('Delivery Option')}}
+          </li>
+          <li [ngClass]="selected=== 2 ?'selectedHeaderItem':'headerItem'">
+            {{util.getString('Delivery Address')}}
+          </li>
+          <li [ngClass]="selected=== 3 ?'selectedHeaderItem':'headerItem'">
+            {{util.getString('Payment')}}
+          </li>
+        </ul>
+      </div>
+      <div class="paider">
+        <div *ngIf="selected===1" class="mainClass">
+          <p class="title"> {{util.getString('Delivery Options')}} </p>
+          <div class="form-check">
+            <input type="radio" (change)="handleChange('home')" class="form-check-input" id="materialUnchecked"
+              name="materialExampleRadios" [checked]="deliveryOption === 'home'?true:false" value="home" mdbInput>
+            <label class="form-check-label" for="materialUnchecked"> {{util.getString('At Home')}} </label>
+            <img src="assets/imgs/home.png" class="imgs" />
+          </div>
+
+          <div class="form-check">
+            <input type="radio" (change)="handleChange('store')" class="form-check-input" id="materialChecked"
+              name="materialExampleRadios" value="store" mdbInput [checked]="deliveryOption === 'store'?true:false">
+            <label class="form-check-label" for="materialChecked"> {{util.getString('Self Pickup')}} </label>
+            <img src="assets/imgs/store.png" class="imgs" />
+          </div>
+
+          <p class="title"> {{util.getString('Receive at')}} </p>
+
+          <ng-template #popContent2 let-greeting="greeting">
+            <button type="button" class="btn btn-clear mr-2 bolder" (click)="onSelect('today')" mdbWavesEffect mdbBtn
+              triggers="manual">
+              {{util.getString('Today')}} {{today}}
+
+            </button>
+            <button type="button" class="btn btn-clear mr-2 bolder" (click)="onSelect('next')" mdbWavesEffect mdbBtn
+              triggers="manual">
+              {{util.getString('Tomorrow')}} {{nextDay}}
+
+            </button>
+          </ng-template>
+          <button type="button" class="btn btn-clear mr-2 dateBtn" mdbWavesEffect mdbBtn [ngbPopover]="popContent2"
+            triggers="manual" placement="bottom" #p2="ngbPopover" (click)="p2.open()">
+            {{time}}
+            <span class="fa fa-chevron-down" aria-hidden="true"></span>
+          </button>
+
+
+          <div *ngIf="deliveryOption === 'store'">
+            <p class="title"> {{util.getString('Stores')}} </p>
+            <div *ngFor="let item of storeAddress" class="stores">
+              <p class="name">
+                <span class="fa fa-map-marker" aria-hidden="true"></span> {{item.name}}
+              </p>
+              <p class="address"> {{item.address}} </p>
+            </div>
+
+            <p class="bottomText" *ngIf="deliveryOption === 'store'"> <span class="bolder">{{util.getString('Note')}} :
+              </span>
+              {{util.getString("Please visit this stores for your grocery , you can find this address in order details as well, if you found more than one address in list then, you have to visit every stores for your grocery")}}
+            </p>
+          </div>
+
+          <div class="nextBtns">
+            <button mdbBtn type="button" *ngIf="selected !== 1" (click)="prev()" color="success" mdbWavesEffect>
+              <mdb-icon fas icon="angle-left" class="mr-1"></mdb-icon>{{util.getString('Previous')}}
+            </button>
+            <button mdbBtn type="button" color="success" (click)="next()" mdbWavesEffect>
+              <mdb-icon fas icon="angle-right" class="mr-1"></mdb-icon>{{util.getString('Next')}}
+            </button>
+          </div>
+        </div>
+        <!-- FOR Delivery Options -->
+
+        <!-- FOR Address -->
+        <div *ngIf="selected === 2" class="mainClass">
+          <div class="nextBtns">
+            <p class="title"> {{util.getString('Delivery Address')}} </p>
+            <div class="newAddress">
+              <a type="button" mdbBtn color="primary" outline="true" class="waves-light" mdbWavesEffect
+                data-dismiss="modal" (click)="addNewAddress()"> {{util.getString('Add New Address')}} </a>
+            </div>
+
+            <div class="form-check" *ngFor="let item of myaddress">
+              <input type="radio" [(ngModel)]="selectedAddress" class="form-check-input" [value]="item.id"
+                [id]="item.id" name="materialExampleRadios" mdbInput>
+              <label class="form-check-label" [for]="item.id">{{item.title}}
+                <br>
+                <span class="name">{{item.house}} {{item.landmark}} {{item.address}}</span>
+              </label>
+            </div>
+
+            <button mdbBtn type="button" *ngIf="selected !== 1" (click)="prev()" color="success" mdbWavesEffect>
+              <mdb-icon fas icon="angle-left" class="mr-1"></mdb-icon>{{util.getString('Previous')}}
+            </button>
+            <button mdbBtn type="button" color="success" (click)="next()" mdbWavesEffect>
+              <mdb-icon fas icon="angle-right" class="mr-1"></mdb-icon>{{util.getString('Next')}}
+            </button>
+          </div>
+        </div>
+        <!-- FOR Address -->
+
+        <!-- For Payment -->
+        <div *ngIf="selected === 3" class="mainClass">
+          <p class="title"> {{util.getString('Payment Options')}} </p>
+          <div class="payPalBtn">
+            <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+          </div>
+          <div class="radioBtns">
+            <div class="form-check" *ngIf="cart.havePayment && cart.haveCOD">
+              <input type="radio" (change)="payMethod('cod')" class="form-check-input" id="paymethodCOD"
+                name="materialExampleRadios" value="cod" mdbInput>
+              <label class="form-check-label" for="paymethodCOD"> {{util.getString('Cash on delivery')}} </label>
+              <img src="assets/imgs/cod.png" class="imgs" />
+            </div>
+            <div class="form-check" *ngIf="cart.havePayment && cart.haveStripe">
+              <input type="radio" (change)="payMethod('stripe')" class="form-check-input" id="paymethodStripe"
+                name="materialExampleRadios" value="stripe" mdbInput>
+              <label class="form-check-label" for="paymethodStripe">{{util.getString('Pay with Stripe')}} </label>
+              <img src="assets/imgs/stripe.png" class="imgs" />
+            </div>
+
+            <div class="form-check" *ngIf="cart.havePayment && cart.haveRazor">
+              <input type="radio" (change)="payMethod('razor')" class="form-check-input" id="paymethodRazor"
+                name="materialExampleRadios" value="stripe" mdbInput>
+              <label class="form-check-label" for="paymethodRazor">{{util.getString('Pay with Razor')}} </label>
+              <img src="assets/imgs/razor.svg" class="imgs" />
+            </div>
+
+            <div class="form-check" *ngIf="cart.havePayment && cart.havePayTM">
+              <input type="radio" (change)="payMethod('paytm')" class="form-check-input" id="paytmPay"
+                name="materialExampleRadios" value="stripe" mdbInput>
+              <label class="form-check-label" for="paytmPay"> {{util.getString('Pay with PayTM')}} </label>
+              <img src="assets/imgs/paytmlogo.png" class="imgs" />
+            </div>
+
+            <div class="form-check" *ngIf="cart.havePayment && cart.haveInstamojo">
+              <input type="radio" (change)="payMethod('instamojo')" class="form-check-input" id="instamojo"
+                name="materialExampleRadios" value="stripe" mdbInput>
+              <label class="form-check-label" for="instamojo">{{util.getString('Pay with Instamojo')}} </label>
+              <img src="assets/imgs/instalogos.png" class="imgs" />
+            </div>
+
+            <div class="form-check" *ngIf="cart.havePayment && cart.havePayStack">
+              <input type="radio" (change)="payMethod('paystacks')" class="form-check-input" id="paystacks"
+                name="materialExampleRadios" value="stripe" mdbInput>
+              <label class="form-check-label" for="paystacks"> {{util.getString('Pay with PayStacks')}} </label>
+              <img src="assets/imgs/paystack.png" class="imgs" />
+            </div>
+            <div class="form-check" *ngIf="cart.havePayment && cart.haveFlutterwave">
+              <input type="radio" (change)="payMethod('flutterPay')" class="form-check-input" id="flutterPay"
+                name="materialExampleRadios" value="stripe" mdbInput>
+              <label class="form-check-label" for="flutterPay">{{util.getString('Pay with Flutterwave')}} </label>
+              <img src="assets/imgs/flutter.png" class="imgs" />
+            </div>
+
+          </div>
+          <div class="nextBtns">
+            <button mdbBtn type="button" *ngIf="selected !== 1" (click)="prev()" color="success" mdbWavesEffect>
+              <mdb-icon fas icon="angle-left" class="mr-1"></mdb-icon>{{util.getString('Previous')}}
+            </button>
+            <button mdbBtn type="button" *ngIf="selected !== 3" color="success" (click)="next()" mdbWavesEffect>
+              <mdb-icon fas icon="angle-right" class="mr-1"></mdb-icon>{{util.getString('Next')}}
+            </button>
+            <button mdbBtn type="button" *ngIf="selected === 3 && payMethods" color="success" (click)="submit()"
+              mdbWavesEffect>
+              <mdb-icon fas icon="angle-right" class="mr-1"></mdb-icon>{{util.getString('Submit')}}
+            </button>
+          </div>
+        </div>
+        <!-- For Payment -->
+      </div>
+    </div>
+
+    <div class="col-md-3 col-12 centerAligned">
+      <div class="content_div" *ngIf="cart.cart.length">
+        <div class="card_div" *ngFor="let item of cart.cart;let i = index">
+          <div class="back_image" [style.backgroundImage]="'url('+api.mediaURL+item.cover+')'">
+            <div class="percent" *ngIf="item.discount !== '0'"> {{item.discount}}% </div>
+            <div *ngIf="item.in_stoke === '0'" class="notInStoke">
+              <span class="text"> {{util.getString('Out of Stoke')}} </span>
+            </div>
+          </div>
+          <div class="second_div">
+            <span class="name_lbl">{{ (item.name.length>15)? (item.name | slice:0:15)+'..':(item.name) }}</span>
+            <div *ngIf="item.size ==='1'" class="variant">
+              <div class="selecter" [ngbPopover]="popContent" placement="bottom" triggers="manual" #p1="ngbPopover"
+                (click)="p1.open()">
+                <span>
+                  <span> {{
+                                    item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                    item.variations[0].items[item.variant].title ?
+                                    item.variations[0].items[item.variant].title : ''}} </span>
+                  -
+                  <span *ngIf="util.cside ==='left'" class="price_lbl"> {{util.currecny}}
+                    <span class="original" *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                    item.variations[0].items[item.variant].discount">
+                      {{ item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                    item.variations[0].items[item.variant].price ?
+                                    item.variations[0].items[item.variant].price : 0}}
+                    </span>
+                    <span class="sell" *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                    item.variations[0].items[item.variant].discount"> {{item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                    item.variations[0].items[item.variant].discount ?
+                                    item.variations[0].items[item.variant].discount : 0}}
+                    </span>
+                    <span
+                      *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                    item.variations[0].items[item.variant].discount === 0 && !item.variations[0].items[item.variant].discount">
+                      {{ item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                    item.variations[0].items[item.variant].price ?
+                                    item.variations[0].items[item.variant].price : 0}}
+                    </span>
+
+                  </span>
+                  <span *ngIf="util.cside ==='right'">
+                    <span class="original" *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                              item.variations[0].items[item.variant].discount">
+                      {{ item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                              item.variations[0].items[item.variant].price ?
+                                              item.variations[0].items[item.variant].price : 0}}
+                    </span>
+                    <span class="sell" *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                            item.variations[0].items[item.variant].discount"> {{item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                            item.variations[0].items[item.variant].discount ?
+                                            item.variations[0].items[item.variant].discount : 0}}
+                    </span>
+                    <span
+                      *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                              item.variations[0].items[item.variant].discount === 0 && !item.variations[0].items[item.variant].discount">
+                      {{ item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                              item.variations[0].items[item.variant].price ?
+                                              item.variations[0].items[item.variant].price : 0}}
+                    </span>
+                    {{util.currecny}}
+                  </span>
+                </span>
+                <mdb-icon fas icon="angle-down"></mdb-icon>
+
+              </div>
+              <ng-template #popContent let-greeting="greeting">
+                <div *ngFor="let option of item.variations[0].items;let ix = index" class="normalItem"
+                  (click)="item.variant = ix;cart.calcuate()">
+                  {{option.title}} -
+                  <span class="price_lbl" *ngIf="option.discount === 0 && util.cside ==='left'"> {{util.currecny}}
+                    {{option.price}} </span>
+                  <span class="price_lbl" *ngIf="option.discount === 0 && util.cside ==='right'">
+                    {{option.price}}
+                    {{util.currecny}}</span>
+                  <span class="price_lbl" *ngIf="option.discount !== 0">
+                    <span class="original" *ngIf="util.cside ==='left'"> {{util.currecny}} {{option.price}} </span>
+                    <span class="sell" *ngIf="util.cside ==='left'">{{util.currecny}} {{option.discount}} </span>
+                    <span class="original" *ngIf="util.cside ==='right'"> {{option.price}} {{util.currecny}}</span>
+                    <span class="sell" *ngIf="util.cside ==='right'"> {{option.discount}} {{util.currecny}}</span>
+                  </span>
+                </div>
+                <!-- <div *ngFor="let item of cities" [ngClass]="id === item.id ? 'activeCity':'normalCity'"
+                          (click)="selected(item)">
+                          <mdb-icon fas icon="check-circle" *ngIf="id === item.id"></mdb-icon> {{item.name}}
+                        </div> -->
+              </ng-template>
+            </div>
+            <p class="itemsKind" *ngIf="item.size ==='0'">
+              <span *ngIf="item.have_gram === '1'"> {{item.gram}} {{util.getString('grams')}} </span>
+              <span *ngIf="item.have_kg === '1'"> {{item.kg}} {{util.getString('kg')}} </span>
+              <span *ngIf="item.have_liter ==='1'"> {{item.liter}} {{util.getString('ltr')}} </span>
+              <span *ngIf="item.have_ml ==='1'"> {{item.ml}} {{util.getString('ml')}} </span>
+              <span *ngIf="item.have_pcs === '1'"> {{item.pcs}} {{util.getString('pcs')}} </span>
+            </p>
+            <div *ngIf="item.size ==='0'">
+              <p class="price_lbl" *ngIf="item.discount === '0' && util.cside ==='left'"> {{util.currecny}}
+                {{item.original_price}} </p>
+              <p class="price_lbl" *ngIf="item.discount === '0' && util.cside ==='right'">
+                {{item.original_price}}
+                {{util.currecny}}</p>
+              <p class="price_lbl" *ngIf="item.discount !== '0'">
+                <span class="original" *ngIf="util.cside ==='left'"> {{util.currecny}} {{item.original_price}} </span>
+                <span class="sell" *ngIf="util.cside ==='left'">{{util.currecny}} {{item.sell_price}} </span>
+                <span class="original" *ngIf="util.cside ==='right'"> {{item.original_price}} {{util.currecny}}</span>
+                <span class="sell" *ngIf="util.cside ==='right'"> {{item.sell_price}} {{util.currecny}}</span>
+              </p>
+            </div>
+
+            <div class="cartBtn" *ngIf="cart.itemId.includes(item.id)">
+              <div class="abs_add">
+                <img src="assets/imgs/remove.png" (click)="remove(item,i)">
+                <span>{{item.quantiy}}</span>
+                <img src="assets/imgs/add.png" (click)="add(item,i)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="billing">
+        <div class="singleRow">
+          <!-- offersModal -->
+          <a type="button" mdbBtn color="primary" style="width: 100%;" outline="true" class="waves-light" mdbWavesEffect
+            (click)="offersModal.show()"> {{util.getString('Apply Coupon')}}
+          </a>
+        </div>
+        <div class="singleRow">
+          <p class="headerTitle">{{util.getString('Item Total')}} </p>
+          <p class="price">
+            <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.totalPrice}}</span>
+            <span *ngIf="util.cside ==='right'">{{cart.totalPrice}} {{util.currecny}} </span>
+          </p>
+        </div>
+
+        <div class="singleRow" *ngIf="cart.coupon">
+          <p class="headerTitle">{{util.getString('Dicount')}} </p>
+          <p class="price">
+            <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.discount}}</span>
+            <span *ngIf="util.cside ==='right'">{{cart.discount}} {{util.currecny}} </span>
+          </p>
+        </div>
+
+        <div class="singleRow">
+          <p class="headerTitle">{{util.getString('Taxes & Charges')}} </p>
+          <p class="price">
+            <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.orderTax}}</span>
+            <span *ngIf="util.cside ==='right'">{{cart.orderTax}} {{util.currecny}} </span>
+          </p>
+        </div>
+
+        <div class="singleRow">
+          <p class="headerTitle">{{util.getString('Delivery Charges')}} </p>
+          <p class="price">
+            <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.deliveryPrice}}</span>
+            <span *ngIf="util.cside ==='right'">{{cart.deliveryPrice}} {{util.currecny}} </span>
+          </p>
+        </div>
+
+        <div class="singleRow">
+          <p class="headerTotal boldClass">{{util.getString('Grand Total')}} </p>
+          <p class="priceTotal boldClass">
+
+            <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.grandTotal}}</span>
+            <span *ngIf="util.cside ==='right'">{{cart.grandTotal}} {{util.currecny}} </span>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FORM -->
+
+  <!-- FORM -->
+</div>
+
+<div *ngIf="!cart.cart?.length" class="centeredItems">
+  <img src="assets/imgs/cart.png" alt="" srcset="" class="imgs">
+  <p class="text">{{util.getString('No items found')}} </p>
+</div>

@@ -1,0 +1,34 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+
+  <div class="row form_row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+
+      <div class="form_div">
+
+        <div class="head_title">
+          <label> {{util.getString('Login')}} </label>
+        </div>
+
+        <input type="email" [placeholder]="util.getString('Email')" [(ngModel)]="email" class="form-control">
+        <input type="password" [placeholder]="util.getString('Password')" [(ngModel)]="password" class="form-control">
+        <label class="forgot" (click)="reset()"> {{util.getString('Forgot Password ?')}} </label>
+        <button type="button" class="btn" (click)="goToHome()"> {{util.getString('Login')}} </button>
+
+        <hr>
+
+        <label class="bottom_lbl" (click)="goToRegister()"> {{util.getString('Create New Account')}} </label>
+
+      </div>
+
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+
+</div>

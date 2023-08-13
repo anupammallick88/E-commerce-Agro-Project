@@ -1,0 +1,170 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+  <div #content>
+    <div style="padding-bottom: 100px;">
+      <div class="flexer">
+        <select class="selecltItem" [(ngModel)]="filter" (change)="onChange($event.target.value)">
+          <option value="1">{{util.getString('Popularity')}} </option>
+          <option value="2">{{util.getString('Price - Low to High')}} </option>
+          <option value="3">{{util.getString('Price - High to Low')}} </option>
+          <option value="4">{{util.getString('A - Z')}} </option>
+          <option value="5">{{util.getString('Z - A')}} </option>
+          <option value="6">{{util.getString('% Off - High to Low')}} </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-3 boxs" *ngFor="let product of products;let i = index;">
+          <div class="productimage" [ngStyle]="{'background-image':'url('+api.mediaURL+product.cover+')'}"
+            (click)="singleProduct(product)">
+            <div class="percent" *ngIf="product.discount !== '0'"> {{product.discount}}% </div>
+            <div *ngIf="product.in_stoke === '0'" class="notInStoke">
+              <p class="text">{{util.getString('Out of Stoke')}} </p>
+            </div>
+          </div>
+
+          <img src="assets/imgs/veg.png" class="kind" alt="Veg" *ngIf="product.kind === '1'">
+          <img src="assets/imgs/non.png" class="kind" alt="Non Veg" *ngIf="product.kind === '0'">
+          <img src="assets/imgs/offer.png" class="offer" alt="Offer" *ngIf="product.in_offer ==='1'">
+          <p class="producttext" (click)="singleProduct(product)">
+            {{ (product.name.length>20)? (product.name | slice:0:20)+'..':(product.name) }}
+          </p>
+          <div *ngIf="product.size ==='1'" class="variant">
+            <div class="selecter" [ngbPopover]="popContent" placement="bottom" triggers="manual" #p1="ngbPopover"
+              (click)="p1.open()">
+              <span>
+                <span> {{
+                                            product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                            product.variations[0].items[product.variant].title ?
+                                            product.variations[0].items[product.variant].title : ''}} </span>
+                -
+                <span *ngIf="util.cside ==='left'" class="price_lbl"> {{util.currecny}}
+                  <span class="original" *ngIf="product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                            product.variations[0].items[product.variant].discount">
+                    {{ product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                            product.variations[0].items[product.variant].price ?
+                                            product.variations[0].items[product.variant].price : 0}}
+                  </span>
+                  <span class="sell" *ngIf="product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                            product.variations[0].items[product.variant].discount"> {{product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                            product.variations[0].items[product.variant].discount ?
+                                            product.variations[0].items[product.variant].discount : 0}}
+                  </span>
+                  <span
+                    *ngIf="product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                            product.variations[0].items[product.variant].discount === 0 && !product.variations[0].items[product.variant].discount">
+                    {{ product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                            product.variations[0].items[product.variant].price ?
+                                            product.variations[0].items[product.variant].price : 0}}
+                  </span>
+
+                </span>
+                <span *ngIf="util.cside ==='right'">
+                  <span class="original" *ngIf="product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                                      product.variations[0].items[product.variant].discount">
+                    {{ product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                                      product.variations[0].items[product.variant].price ?
+                                                      product.variations[0].items[product.variant].price : 0}}
+                  </span>
+                  <span class="sell" *ngIf="product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                                    product.variations[0].items[product.variant].discount"> {{product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                                    product.variations[0].items[product.variant].discount ?
+                                                    product.variations[0].items[product.variant].discount : 0}}
+                  </span>
+                  <span
+                    *ngIf="product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                                      product.variations[0].items[product.variant].discount === 0 && !product.variations[0].items[product.variant].discount">
+                    {{ product.variations && product.variations[0] && product.variations[0].items[product.variant] &&
+                                                      product.variations[0].items[product.variant].price ?
+                                                      product.variations[0].items[product.variant].price : 0}}
+                  </span>
+                  {{util.currecny}}
+                </span>
+              </span>
+              <mdb-icon fas icon="angle-down"></mdb-icon>
+
+            </div>
+            <ng-template #popContent let-greeting="greeting">
+              <div *ngFor="let option of product.variations[0].items;let ix = index" class="normalItem"
+                (click)="product.variant = ix;">
+                {{option.title}} -
+                <span class="price_lbl" *ngIf="option.discount === 0 && util.cside ==='left'"> {{util.currecny}}
+                  {{option.price}} </span>
+                <span class="price_lbl" *ngIf="option.discount === 0 && util.cside ==='right'">
+                  {{option.price}}
+                  {{util.currecny}}</span>
+                <span class="price_lbl" *ngIf="option.discount !== 0">
+                  <span class="original" *ngIf="util.cside ==='left'"> {{util.currecny}} {{option.price}} </span>
+                  <span class="sell" *ngIf="util.cside ==='left'">{{util.currecny}} {{option.discount}} </span>
+                  <span class="original" *ngIf="util.cside ==='right'"> {{option.price}} {{util.currecny}}</span>
+                  <span class="sell" *ngIf="util.cside ==='right'"> {{option.discount}} {{util.currecny}}</span>
+                </span>
+              </div>
+              <!-- <div *ngFor="let item of cities" [ngClass]="id === product.id ? 'activeCity':'normalCity'"
+                                  (click)="selected(item)">
+                                  <mdb-icon fas icon="check-circle" *ngIf="id === product.id"></mdb-icon> {{product.name}}
+                                </div> -->
+            </ng-template>
+          </div>
+          <p class="itemsKind" *ngIf="product.size ==='0'">
+            <span *ngIf="product.have_gram === '1'"> {{product.gram}} {{util.getString('grams')}} </span>
+            <span *ngIf="product.have_kg === '1'"> {{product.kg}} {{util.getString('kg')}} </span>
+            <span *ngIf="product.have_liter ==='1'"> {{product.liter}} {{util.getString('ltr')}} </span>
+            <span *ngIf="product.have_ml ==='1'"> {{product.ml}} {{util.getString('ml')}} </span>
+            <span *ngIf="product.have_pcs === '1'"> {{product.pcs}} {{util.getString('pcs')}} </span>
+          </p>
+          <div *ngIf="product.size ==='0'">
+            <p class="price_lbl" *ngIf="product.discount === '0' && util.cside ==='left'"> {{util.currecny}}
+              {{product.original_price}} </p>
+            <p class="price_lbl" *ngIf="product.discount === '0' && util.cside ==='right'">
+              {{product.original_price}}
+              {{util.currecny}}</p>
+            <p class="price_lbl" *ngIf="product.discount !== '0'">
+              <span class="original" *ngIf="util.cside ==='left'"> {{util.currecny}} {{product.original_price}} </span>
+              <span class="sell" *ngIf="util.cside ==='left'">{{util.currecny}} {{product.sell_price}} </span>
+              <span class="original" *ngIf="util.cside ==='right'"> {{product.original_price}} {{util.currecny}}</span>
+              <span class="sell" *ngIf="util.cside ==='right'"> {{product.sell_price}} {{util.currecny}}</span>
+            </p>
+          </div>
+          <div class="btnBtm"
+            *ngIf="!cart.itemId.includes(product.id) && product.quantiy <= 0 && product.in_stoke === '1'">
+            <div class="ion-activatable ripple-parent" (click)="addToCart(product,i)">
+              {{util.getString('Add')}}
+            </div>
+          </div>
+
+          <div class="cartBtn" *ngIf="cart.itemId.includes(product.id)">
+            <div class="abs_add">
+              <img src="assets/imgs/remove.png" (click)="remove(product,i)">
+              <p *ngIf="product.quantiy !== 0">{{product.quantiy}}</p>
+              <p *ngIf="product.quantiy === 0">
+              </p>
+              <img src="assets/imgs/add.png" (click)="add(product,i)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="maxLimit < products.length && loaded === false" (click)="loadData()" class="centerItem">
+        <span class="loadMore">
+          {{util.getString('Show more')}}
+        </span>
+      </div>
+      <div *ngIf="loaded" class="centerItem">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="row" style="overflow: hidden;" *ngIf="dummyTopProducts?.length">
+        <div class="col-4 col-md-2" *ngFor="let item of dummyTopProducts;">
+          <ngx-skeleton-loader [theme]="{ 'border-radius': '5px', height: '120px',width:'120px'}">
+          </ngx-skeleton-loader>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

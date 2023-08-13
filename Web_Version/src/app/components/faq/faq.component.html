@@ -1,0 +1,13 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+  <div *ngIf="!loaded">
+    <ngx-skeleton-loader *ngFor="let item of [1,2,3,4,5,6,7,8,9]"
+      [theme]="{ 'border-radius': '5px', height: '10px',width:'100%'}"></ngx-skeleton-loader>
+  </div>
+  <p [innerHTML]="getContent()" *ngIf="loaded"></p>
+</div>

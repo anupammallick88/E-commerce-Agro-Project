@@ -1,0 +1,13 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+  <div class="centered">
+    <h2 *ngIf="status ==='failure'"> {{util.getString('Transaction status is failure')}} </h2>
+    <h2 *ngIf="status ==='success'"> {{util.getString('Your payment was successful done, thank you for purchase.')}}
+    </h2>
+  </div>
+</div>

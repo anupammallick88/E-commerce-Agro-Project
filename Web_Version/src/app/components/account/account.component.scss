@@ -1,0 +1,188 @@
+/*
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+*/
+label{
+    display: block;
+    margin: 0;
+}
+
+.sidemenu{
+    .my_col{
+        padding: 0px 10px;
+        display: flex;
+        align-items: center;
+        // border-bottom: 1px solid lightgray;
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        .icn_div{
+            height: 25px;
+            width: 25px;
+            min-width: 25px;
+            border-radius: 5px;
+            border: 1px solid lightgray;
+            position: relative;
+            margin-right: 10px;
+
+            mdb-icon{
+                font-size: 13px;
+                color: #45C261;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+        }
+
+        .right_div{
+          text-align: left;
+        }
+
+        .title_lbl{
+            font-weight: 500;
+            font-size: 15px;
+            margin: 0;
+        }
+        .small_lbl{
+          color: gray;
+          margin: 0;
+          font-size: 14px;
+        }
+    }
+}
+
+.head_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+
+    label {
+        font-weight: 500;
+        font-size: 26px;
+        text-transform: capitalize;
+    }
+}
+
+.user_div{
+    padding-left: 25px;
+    padding-right: 25px;
+    .user_img{
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+        border: 3px solid #45C261;
+        margin: auto;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-width: 90px;
+        position: relative;
+    }
+    .image-upload>input {
+      display: none;
+    }
+    .centeredItem{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      .image-upload{
+        margin: 10px;
+        img{
+          height: 100px;
+          width: 100px;
+          border-radius: 50%;
+          border: 2px solid #45C261;
+        }
+      }
+    }
+    .user_icn{
+        display: block;
+        margin: auto;
+        margin-top: 30px;
+
+        mdb-icon{
+            font-size: 70px;
+            color: #45C261;
+        }
+    }
+
+    .form_div{
+        margin-top: 30px;
+
+        .class_col{
+            margin-top: 20px;
+        }
+        .submitBtn{
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          .btn{
+              background: #45C261;
+              color: white;
+              margin-top: 10px;
+              margin-bottom: 10px;
+          }
+        }
+    }
+}
+
+.addNewBtn{
+  display: flex;
+  flex-direction: row-reverse;
+  .btn{
+      background: #45C261;
+      color: white;
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+}
+
+.my_col_address{
+    padding:15px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin-top: 15px;
+
+    .bold_lbl{
+        font-weight: 500;
+        margin-bottom: 10px;
+        font-size: 15px;
+    }
+
+    .bold_lbl2{
+        font-weight: 500;
+        margin-bottom: 5px;
+        font-size: 14px;
+        border-bottom: 2px solid #45C261;
+        width: max-content;
+    }
+
+    .small_lbl{
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .action_div{
+        margin-top: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        border-top: 1px solid lightgray;
+        padding-top: 10px;
+        label{
+          cursor: pointer;
+        }
+    }
+}

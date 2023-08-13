@@ -1,0 +1,357 @@
+/*
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+*/
+.flexBox{
+  display: flex;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  .fetching{
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+      min-width: 100px;
+      min-height: 100px;
+  }
+}
+.centerItems{
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,50%);
+  left: 50%;
+}
+
+.cartHeader{
+  background: #45C261;
+  color: white;
+}
+.btns{
+  background-color: #f27474;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.cartFooter{
+  position: fixed;
+  bottom: 0px;
+  background-color: white;
+  width: 100%;
+}
+
+.content_div{
+  padding: 10px 0px;
+  overflow: scroll;
+  height: 60vh !important;
+   scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  overflow: auto;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+    .card_div{
+      width: 100%;
+      padding: 10px;
+      border-bottom: 0.5px solid #E8E8E8;
+      display: flex;
+      flex-direction: row;
+
+    .back_image{
+        width: 100px;
+        height: 100px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 7px;
+        min-width: 100px;
+        position: relative;
+        .percent{
+          position: absolute;
+          height: 25px;
+          width: 25px;
+          background: red;
+          left: 5px;
+          top: 2px;
+          line-height: 25px;
+          border-radius: 50%;
+          text-align: center;
+          font-weight: bold;
+          font-size: 10px;
+          color:white;
+        }
+    }
+    .second_div{
+        padding-left: 15px;
+        position: relative;
+        width: 100%;
+          .kind{
+              height: 15px;
+              width: 15px;
+              position: absolute;
+              right: 0px;
+              top: 0px;
+          }
+          .offer{
+              height: 15px;
+              width: 15px;
+              position: absolute;
+              right: 20px;
+              top: 0px;
+          }
+          .itemsKind{
+            font-size: 12px;
+            margin: 0px;
+          }
+          .variant{
+              .selecter{
+                font-size: 10px;
+                padding: 2px;
+                border: 1px solid lightgray;
+                margin: 10px 0px;
+                border-radius: 5px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                color: gray;
+                position: relative;
+                overflow: hidden;
+              }
+          }
+          .normalItem{
+            color: black;
+            padding: 5px 0px;
+            text-align: start;
+            cursor: pointer;
+          }
+          .normalItem:hover{
+            color: #45C261;
+          }
+          .price_lbl{
+              font-weight: 400;
+              font-size: 15px;
+              margin: 0px;
+              font-weight: bold;
+              .original{
+                  text-decoration: line-through;
+                  font-size: 13px;
+              }
+              .sell{
+                  font-weight: bold;
+              }
+              .dicount{
+                  font-weight: bold;
+                  font-size: 13px;
+              }
+          }
+          .name_lbl{
+              font-weight: 700;
+              font-size: 15px;
+              text-transform: capitalize;
+          }
+          .desc{
+              font-size: 12px;
+          }
+          .stoke{
+              font-size: 10px;
+              .in{
+                  color: green;
+              }
+              .out{
+                  color: indianred;
+              }
+          }
+          ion-icon{
+              position: absolute;
+              right: 0;
+              top: 0;
+              font-size: 20px;
+              color: #29b507;
+              padding: 5px;
+              box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+              border-radius: 50%;
+          }
+
+          ion-button{
+              position: absolute;
+              // right: 0;
+              bottom: 0;
+              width: 90px;
+              font-size: 12px;
+              color: #29b507;
+              --border-color: #73D25C;
+          }
+      }
+        .cartBtn{
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          color:white;
+          .abs_add{
+              width: 100px;
+              background: #45C261;
+              height: 30px;
+              border-radius: 15px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding-left: 3px;
+              padding-right: 3px;
+
+              ion-label {
+                  color: white;
+                  font-size: 14px;
+                  font-family: muli-bold;
+              }
+
+              img{
+                  color: #FF8E80;
+                  width: 25px;
+              }
+          }
+      }
+    }
+}
+.topNavBtn{
+  position: fixed;
+  bottom: 60px;
+  right: 30px;
+  z-index: 999;
+}
+
+ .coupones{
+    display: flex;
+    padding: 20px 10px;
+    background: #f3f3f3;
+    margin-top: 10px;
+    .badge{
+        width: 25px;
+        height: 25px;
+    }
+    .title{
+        padding: 0px 10px;
+        color: #45C261;;
+    }
+}
+.billing{
+    padding: 5px 10px;
+    .singleRow{
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px dashed lightgray;
+        .headerTitle{
+            font-size: 0.8rem;
+        }
+        .boldClass{
+            font-weight: bold;
+        }
+        .headerTotal{
+            font-size: 1rem;
+        }
+        .priceTotal{
+            font-size: 1rem;
+        }
+        .price{
+            font-size: 0.8rem;
+        }
+    }
+}
+.instructions{
+  color: #45C261;
+  margin: 0px;
+}
+.content_div::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
+
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 480px) and (-webkit-device-pixel-ratio: 1) {
+  .topNavBtn{
+    position: fixed;
+    bottom: 70px;
+    right: 5px;
+    z-index: 999;
+  }
+ }
+
+/* iphone 4 */
+@media only screen and (min-device-width: 320px) and (max-device-height: 480px) and (-webkit-device-pixel-ratio: 2) {
+  .topNavBtn{
+    position: fixed;
+    bottom: 70px;
+    right: 5px;
+    z-index: 999;
+  }
+ }
+
+/* iphone 5 */
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (-webkit-device-pixel-ratio: 2) {
+  .topNavBtn{
+    position: fixed;
+    bottom: 70px;
+    right: 5px;
+    z-index: 999;
+  }
+ }
+
+/* iphone 6, 6s, 7, 8 */
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (-webkit-device-pixel-ratio: 2) {
+  .topNavBtn{
+    position: fixed;
+    bottom: 70px;
+    right: 5px;
+    z-index: 999;
+  }
+ }
+
+/* iphone 6+, 6s+, 7+, 8+ */
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (-webkit-device-pixel-ratio: 3) {
+  .topNavBtn{
+    position: fixed;
+    bottom: 70px;
+    right: 5px;
+    z-index: 999;
+  }
+ }
+
+/* iphone X , XS, 11 Pro */
+@media only screen and (min-device-width: 375px) and (max-device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+  .topNavBtn{
+    position: fixed;
+    bottom: 70px;
+    right: 5px;
+    z-index: 999;
+  }
+ }
+
+/* iphone XR, 11 */
+@media only screen and (min-device-width : 414px) and (max-device-height : 896px) and (-webkit-device-pixel-ratio : 2) {
+  .topNavBtn{
+    position: fixed;
+    bottom: 70px;
+    right: 5px;
+    z-index: 999;
+  }
+ }
+
+/* iphone XS Max, 11 Pro Max */
+@media only screen and (min-device-width : 414px) and (max-device-height : 896px) and (-webkit-device-pixel-ratio : 3) {
+  .topNavBtn{
+    position: fixed;
+    bottom: 70px;
+    right: 5px;
+    z-index: 999;
+  }
+ }

@@ -1,0 +1,255 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<toaster-container [toasterconfig]="config"></toaster-container>
+<div *ngIf="loading" class="flexBox">
+  <div class="spinner-border text-success" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<div *ngIf="loaded && util.appClosed === false;" (window:resize)="onResize($event)">
+  <ngx-ui-loader fgsType="ball-scale-multiple" fgsColor="#f3f3f3"></ngx-ui-loader>
+  <app-headers *ngIf="util.deviceType !=='mobile'"></app-headers>
+  <app-mobile-header *ngIf="util.deviceType ==='mobile'"></app-mobile-header>
+  <div style="padding: 25px 0px;margin-bottom: 50px;">
+    <div mdbModal #cartModel="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
+      aria-labelledby="myBasicModalLabel" aria-hidden="true" style="z-index: 9999;">
+      <div class="modal-dialog modal-full-height modal-right" role="document">
+        <div class="modal-content">
+          <div class="modal-header cartHeader">
+            <button type="button" mdbWavesEffect color="light" class="close pull-right" aria-label="Close"
+              (click)="cartModel.hide()">
+              <span aria-hidden="true" style="color: white;">×</span>
+            </button>
+            <p class="modal-title w-100" id="myModalLabel">{{util.getString('My Cart')}} <span style="font-size: 10px;"
+                *ngIf="cart.cart?.length"> ( {{cart.cart?.length}} {{util.getString('items')}} ) </span> </p>
+          </div>
+          <div class="modal-body">
+            <div class="billing" *ngIf="cart.cart?.length">
+              <div class="singleRow">
+                <p class="headerTitle"> {{util.getString('Item Total')}} </p>
+                <p class="price">
+                  <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.totalPrice}}</span>
+                  <span *ngIf="util.cside ==='right'">{{cart.totalPrice}} {{util.currecny}} </span>
+                </p>
+              </div>
+
+              <div class="singleRow">
+                <p class="headerTitle"> {{util.getString('Taxes & Charges')}} </p>
+                <p class="price">
+                  <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.orderTax}}</span>
+                  <span *ngIf="util.cside ==='right'">{{cart.orderTax}} {{util.currecny}} </span>
+                </p>
+              </div>
+
+              <div class="singleRow">
+                <p class="headerTitle"> {{util.getString('Delivery Charges')}} </p>
+                <p class="price">
+                  <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.deliveryPrice}}</span>
+                  <span *ngIf="util.cside ==='right'">{{cart.deliveryPrice}} {{util.currecny}} </span>
+                </p>
+              </div>
+
+              <div class="singleRow">
+                <p class="headerTotal boldClass"> {{util.getString('Grand Total')}} </p>
+                <p class="priceTotal boldClass">
+
+                  <span *ngIf="util.cside ==='left'"> {{util.currecny}} {{cart.grandTotal}}</span>
+                  <span *ngIf="util.cside ==='right'">{{cart.grandTotal}} {{util.currecny}} </span>
+                </p>
+              </div>
+
+            </div>
+            <div class="content_div">
+              <div class="card_div" *ngFor="let item of cart.cart;let i = index">
+                <div class="back_image" [style.backgroundImage]="'url('+api.mediaURL+item.cover+')'">
+                  <div class="percent" *ngIf="item.discount !== '0'"> {{item.discount}}% </div>
+                  <div *ngIf="item.in_stoke === '0'" class="notInStoke">
+                    <span class="text"> {{util.getString('Out of Stoke')}} </span>
+                  </div>
+                </div>
+                <div class="second_div">
+                  <span class="name_lbl">{{ (item.name.length>20)? (item.name | slice:0:20)+'..':(item.name) }}</span>
+                  <img src="assets/imgs/veg.png" class="kind" alt="Veg" *ngIf="item.kind === '1'">
+                  <img src="assets/imgs/non.png" class="kind" alt="Non Veg" *ngIf="item.kind === '0'">
+                  <img src="assets/imgs/offer.png" class="offer" alt="Offer" *ngIf="item.in_offer ==='1'">
+                  <div *ngIf="item.size ==='1'" class="variant">
+                    <div class="selecter" [ngbPopover]="popContent" placement="bottom" triggers="manual"
+                      #p1="ngbPopover" (click)="p1.open()">
+                      <span>
+                        <span> {{
+                                                      item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                      item.variations[0].items[item.variant].title ?
+                                                      item.variations[0].items[item.variant].title : ''}} </span>
+                        -
+                        <span *ngIf="util.cside ==='left'" class="price_lbl"> {{util.currecny}}
+                          <span class="original" *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                      item.variations[0].items[item.variant].discount">
+                            {{ item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                      item.variations[0].items[item.variant].price ?
+                                                      item.variations[0].items[item.variant].price : 0}}
+                          </span>
+                          <span class="sell" *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                      item.variations[0].items[item.variant].discount"> {{item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                      item.variations[0].items[item.variant].discount ?
+                                                      item.variations[0].items[item.variant].discount : 0}}
+                          </span>
+                          <span
+                            *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                      item.variations[0].items[item.variant].discount === 0 && !item.variations[0].items[item.variant].discount">
+                            {{ item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                      item.variations[0].items[item.variant].price ?
+                                                      item.variations[0].items[item.variant].price : 0}}
+                          </span>
+
+                        </span>
+                        <span *ngIf="util.cside ==='right'">
+                          <span class="original" *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                                item.variations[0].items[item.variant].discount">
+                            {{ item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                                item.variations[0].items[item.variant].price ?
+                                                                item.variations[0].items[item.variant].price : 0}}
+                          </span>
+                          <span class="sell" *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                              item.variations[0].items[item.variant].discount"> {{item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                              item.variations[0].items[item.variant].discount ?
+                                                              item.variations[0].items[item.variant].discount : 0}}
+                          </span>
+                          <span
+                            *ngIf="item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                                item.variations[0].items[item.variant].discount === 0 && !item.variations[0].items[item.variant].discount">
+                            {{ item.variations && item.variations[0] && item.variations[0].items[item.variant] &&
+                                                                item.variations[0].items[item.variant].price ?
+                                                                item.variations[0].items[item.variant].price : 0}}
+                          </span>
+                          {{util.currecny}}
+                        </span>
+                      </span>
+                      <mdb-icon fas icon="angle-down"></mdb-icon>
+
+                    </div>
+                    <ng-template #popContent let-greeting="greeting">
+                      <div *ngFor="let option of item.variations[0].items;let ix = index" class="normalItem"
+                        (click)="item.variant = ix;cart.calcuate()">
+                        {{option.title}} -
+                        <span class="price_lbl" *ngIf="option.discount === 0 && util.cside ==='left'"> {{util.currecny}}
+                          {{option.price}} </span>
+                        <span class="price_lbl" *ngIf="option.discount === 0 && util.cside ==='right'">
+                          {{option.price}}
+                          {{util.currecny}}</span>
+                        <span class="price_lbl" *ngIf="option.discount !== 0">
+                          <span class="original" *ngIf="util.cside ==='left'"> {{util.currecny}} {{option.price}}
+                          </span>
+                          <span class="sell" *ngIf="util.cside ==='left'">{{util.currecny}} {{option.discount}} </span>
+                          <span class="original" *ngIf="util.cside ==='right'"> {{option.price}}
+                            {{util.currecny}}</span>
+                          <span class="sell" *ngIf="util.cside ==='right'"> {{option.discount}} {{util.currecny}}</span>
+                        </span>
+                      </div>
+                      <!-- <div *ngFor="let item of cities" [ngClass]="id === item.id ? 'activeCity':'normalCity'"
+                                            (click)="selected(item)">
+                                            <mdb-icon fas icon="check-circle" *ngIf="id === item.id"></mdb-icon> {{item.name}}
+                                          </div> -->
+                    </ng-template>
+                  </div>
+                  <p class="itemsKind" *ngIf="item.size ==='0'">
+                    <span *ngIf="item.have_gram === '1'"> {{item.gram}} {{util.getString('grams')}} </span>
+                    <span *ngIf="item.have_kg === '1'"> {{item.kg}} {{util.getString('kg')}} </span>
+                    <span *ngIf="item.have_liter ==='1'"> {{item.liter}} {{util.getString('ltr')}} </span>
+                    <span *ngIf="item.have_ml ==='1'"> {{item.ml}} {{util.getString('ml')}} </span>
+                    <span *ngIf="item.have_pcs === '1'"> {{item.pcs}} {{util.getString('pcs')}} </span>
+                  </p>
+                  <div *ngIf="item.size ==='0'">
+                    <p class="price_lbl" *ngIf="item.discount === '0' && util.cside ==='left'"> {{util.currecny}}
+                      {{item.original_price}} </p>
+                    <p class="price_lbl" *ngIf="item.discount === '0' && util.cside ==='right'">{{item.original_price}}
+                      {{util.currecny}}</p>
+                    <p class="price_lbl" *ngIf="item.discount !== '0'">
+                      <span class="original" *ngIf="util.cside ==='left'"> {{util.currecny}} {{item.original_price}}
+                      </span>
+                      <span class="sell" *ngIf="util.cside ==='left'">{{util.currecny}} {{item.sell_price}} </span>
+
+                      <span class="original" *ngIf="util.cside ==='right'"> {{item.original_price}}
+                        {{util.currecny}}</span>
+                      <span class="sell" *ngIf="util.cside ==='right'"> {{item.sell_price}} {{util.currecny}}</span>
+
+                    </p>
+                  </div>
+                  <div class="cartBtn" *ngIf="cart.itemId.includes(item.id)">
+                    <div class="abs_add">
+                      <img src="assets/imgs/remove.png" (click)="remove(item,i)">
+                      <span>{{item.quantiy}}</span>
+                      <img src="assets/imgs/add.png" (click)="add(item,i)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="instructions" *ngIf="cart.cart?.length">
+              {{util.getString('Orders once placed cannot be cancelled and are non-refundable')}}
+            </p>
+          </div>
+          <div class="modal-footer cartFooter">
+            <div class="btns" *ngIf="cart.cart.length" (click)="cartModel.hide()" [routerLink]="['checkout']">
+              <span>
+                {{util.getString('Proceed to Checkout')}}
+              </span>
+              <span>
+                <span class="price_lbl" *ngIf="util.cside ==='left'"> {{util.currecny}}
+                  {{cart.grandTotal}} </span>
+                <span class="price_lbl" *ngIf="util.cside ==='right'">
+                  {{cart.grandTotal}}
+                  {{util.currecny}}</span>
+              </span>
+            </div>
+
+            <div class="btns" *ngIf="!cart.cart?.length" (click)="cartModel.hide() ">
+              <span>
+                {{util.getString('Continue Shopping')}}
+              </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+    <div class="container">
+      <a mdbBtn *ngIf="isShow" floating="true" class="topNavBtn" (click)="gotoTop()" size="lg" color="success"
+        mdbWavesEffect>
+        <mdb-icon fas icon="angle-up" style="color: white;"></mdb-icon>
+      </a>
+    </div>
+  </div>
+
+  <app-footers *ngIf="util.deviceType !=='mobile'"></app-footers>
+  <div class="footer-bottom" *ngIf="util.deviceType ==='mobile'">
+    <div class="tabs">
+
+      <a [routerLink]="['/home']" class="social">
+        <mdb-icon fas icon="home"></mdb-icon>
+      </a>
+      <a [routerLink]="['/categories']" class="social">
+        <mdb-icon fas icon="bars"></mdb-icon>
+      </a>
+      <a [routerLink]="['/search']" class="social">
+        <mdb-icon fas icon="search"></mdb-icon>
+      </a>
+      <a [routerLink]="['/checkout']" class="social">
+        <mdb-icon fas icon="shopping-cart">
+        </mdb-icon>
+        <span *ngIf="cart.cart?.length" class="cartTotal"> {{cart.cart?.length}} </span>
+      </a>
+      <a [routerLink]="['account']" class="social">
+        <mdb-icon fas icon="user-alt"></mdb-icon>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loaded && util.appClosed === true" class="centerItems">
+  <p> {{util.appClosedMessage}} </p>
+</div>

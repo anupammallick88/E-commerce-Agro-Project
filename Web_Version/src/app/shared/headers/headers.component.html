@@ -1,0 +1,147 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div mdbModal #cityModal="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true" [config]="{ignoreBackdropClick: true}" style="z-index: 9999;">
+  <div class="modal-dialog modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead" style="text-align: center;">{{util.getString('Select city')}} </p>
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let item of cities" (click)="selectedCity(item)">
+          <p> {{item.name}} </p>
+        </div>
+      </div>
+
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<header class="page-header font-small  " style="margin-bottom: 50px;">
+  <div class="toolbar">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-1">
+          <a (click)="goToHome('Home')">
+            <img src="assets/logo.png" height="30" alt="" style="border-radius: 50%;">
+          </a>
+        </div>
+        <div class="col-lg-2 ">
+          <ng-template #popContent let-greeting="greeting">
+            <div *ngFor="let item of dummy">
+              <ngx-skeleton-loader animation="progress"
+                [theme]="{ 'border-radius': '5px', height: '20px',width:'100px', border: '1px solid white' }">
+              </ngx-skeleton-loader>
+            </div>
+            <div *ngFor="let item of cities" [ngClass]="id === item.id ? 'activeCity':'normalCity'"
+              (click)="selected(item)">
+              <mdb-icon fas icon="check-circle" *ngIf="id === item.id"></mdb-icon> {{item.name}}
+            </div>
+          </ng-template>
+          <button type="button" class="btn btn-clear mr-2 cleanBtn" [ngbPopover]="popContent" triggers="manual"
+            #p1="ngbPopover" (click)="p1.open()">
+            <span class="fa fa-map-pin" aria-hidden="true" *ngIf="cityName"></span>
+            {{cityName}}
+            <span class="fa fa-chevron-down" aria-hidden="true" *ngIf="cityName"></span>
+          </button>
+        </div>
+
+        <div class="col-lg-4" style="display: flex;flex-direction: row;">
+          <input class="form-control" type="text" (keydown.enter)="search($event.target.value)" [(ngModel)]="terms"
+            [ngModelOptions]="{standalone: true}" [placeholder]="util.getString('Search for products')"
+            aria-label="Search" class="searchText" (input)="inputChange()">
+          <mdb-icon (click)="search(terms)" fas icon="search"
+            style="padding: 10px;background: #f3f3f3;cursor: pointer;"></mdb-icon>
+        </div>
+
+        <div class="col-lg-2">
+          <ng-template #popContent2 let-greeting="greeting">
+            <br>
+            <a mdbWavesEffect class="linkBtn" *ngIf="getAccount() === false" (click)="login()">
+              {{util.getString('Login or Sign up')}} </a>
+            <a mdbWavesEffect class="linkBtn" *ngIf="getAccount() === true" (click)="myaccount()">
+              {{util.getString('My Account')}} </a>
+            <hr>
+            <div class="flex_box" (click)="goChat()" *ngIf="getAccount() === true">
+              <mdb-icon fas icon="comments"></mdb-icon> <a class="dark-grey-text">{{util.getString('Chats')}} </a>
+            </div>
+            <hr *ngIf="getAccount() === true">
+            <div class="flex_box" (click)="faq()">
+              <mdb-icon fas icon="question-circle"></mdb-icon> <a class="dark-grey-text">{{util.getString('FAQs')}} </a>
+            </div>
+            <hr *ngIf="getAccount() === true">
+            <div class="flex_box" *ngIf="getAccount() === true" (click)="myOrders()">
+              <mdb-icon fas icon="shopping-cart"></mdb-icon> <a class="dark-grey-text">{{util.getString('Orders')}} </a>
+            </div>
+            <hr>
+            <div class="flex_box" (click)="help()">
+              <mdb-icon fas icon="info-circle"></mdb-icon> <a class="dark-grey-text">{{util.getString('Help')}} </a>
+            </div>
+            <hr *ngIf="getAccount() === true">
+            <div class="flex_box" *ngIf="getAccount() === true" (click)="logout()">
+              <mdb-icon fas icon="power-off"></mdb-icon> <a class="dark-grey-text">{{util.getString('Logout')}} </a>
+            </div>
+          </ng-template>
+          <button type="button" class="btn btn-clear mr-2 cleanBtn" [ngbPopover]="popContent2" triggers="manual"
+            #p2="ngbPopover" (click)="p2.open()">
+            {{util.getString('My Account')}}
+            <span class="fa fa-chevron-down" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="col-lg-2">
+          <ng-template #popContent3 let-greeting="greeting">
+            <div *ngFor="let item of dummyLang">
+              <ngx-skeleton-loader animation="progress"
+                [theme]="{ 'border-radius': '5px', height: '20px',width:'100px', border: '1px solid white' }">
+              </ngx-skeleton-loader>
+            </div>
+            <div *ngFor="let item of langs" [ngClass]="lngId === item.file ? 'activeCity':'normalCity'"
+              (click)="changed(item.file)">
+              <img [src]="api.mediaURL+item.cover" style="height: 15px;width: 15px;margin-right: 5px;" alt="">
+              {{item.name}}
+            </div>
+          </ng-template>
+          <button type="button" class="btn btn-clear mr-2 cleanBtn" [ngbPopover]="popContent3" triggers="manual"
+            #p3="ngbPopover" (click)="p3.open()">
+            <img [src]="getLangFlag()" alt="" style="height: 15px;width: 15px;margin-right: 5px;">
+            {{getLangName()}}
+            <span class="fa fa-chevron-down" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="col-lg-1 flexer">
+          <a class="cartBtns" (click)="util.publishCartBtn()">
+            <span class="carts" *ngIf="cart.cart?.length"> {{cart.cart.length}} </span>
+            <span class="fa fa-shopping-bag" aria-hidden="true"></span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="stack-top" *ngIf="products?.length && terms !==''">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-6">
+          <div class="searchItem">
+            <p *ngFor="let item of products" (click)="openProduct(item)">
+              <img class="imgs" [src]="api.mediaURL+item.cover" alt="" onError="this.src='assets/imgs/user.png'">
+              {{item.name}}
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-1"></div>
+      </div>
+
+    </div>
+  </div>
+</header>

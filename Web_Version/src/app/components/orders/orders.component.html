@@ -1,0 +1,57 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div class="head_title">
+        <div class="row" style="width: 100%;">
+          <div class="col-lg-6">
+            <label> {{util.getString('Your Orders')}} </label>
+          </div>
+          <div class="col-lg-6">
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div *ngFor="let item of dummy" class="dummyCard">
+            <p>
+              <ngx-skeleton-loader></ngx-skeleton-loader>
+            </p>
+            <p>
+              <ngx-skeleton-loader></ngx-skeleton-loader>
+            </p>
+          </div>
+          <div class="card_div" *ngFor="let item of orders" (click)="goToOrder(item)">
+
+            <div class="image_div">
+              <img [src]="api.mediaURL+ item.orders[0].cover" onError="this.src='assets/imgs/user.png'">
+            </div>
+            <div class="desc_div">
+              <p style="font-weight: bold;color: gray;font-size: 12px;"> {{util.getString('ORDER')}} #{{item.id}} </p>
+              <div *ngIf="item.orders?.length" class="border_bottom">
+                <p *ngFor="let order of item.orders;let ol = index" class="items">
+                  <span>{{order.name}} <span *ngIf="order.size ==='1'"> -
+                      {{order.variations[0].items[order.variant].title}}
+                    </span> </span>
+                  <span>X {{order.quantiy}}</span>
+                </p>
+                <p class="itemss">
+                  <span>Total</span>
+                  <span *ngIf="util.cside ==='left'"> {{util.currecny}}{{item.grand_total}} </span>
+                  <span *ngIf="util.cside ==='right'">{{item.grand_total}} {{util.currecny}} </span>
+                </p>
+              </div>
+              <p class="datetime">{{ item.date_time}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+/*
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+*/
+.toolbar{
+  background-color: #45C261 !important;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  max-width: 100%;
+  z-index: 9999;
+  padding: 5px;
+
+  .activeCity{
+    background: #45C261;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .normalCity{
+    background: white;
+    color: #45C261;
+    padding: 10px;
+  }
+
+  .inputBx{
+    display: flex;
+    flex-direction: row;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    .searchBx{
+      padding: 10px;
+      background: #f3f3f3;
+      cursor: pointer;
+      border-top-right-radius:5px;
+      border-bottom-right-radius: 5px;
+    }
+  }
+
+  .cleanBtn{
+    box-shadow: none;
+    line-height: 0px;
+    color: white;
+    width: max-content;
+    min-width: max-content;
+  }
+  .cleanBtn2{
+    box-shadow: none;
+    line-height: 0px;
+    color: white;
+    width: max-content;
+    min-width: max-content;
+  }
+  .linkBtn{
+    background-color: #45C261 !important;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    white-space: nowrap;
+    width: 100%;
+    min-width: 100%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .searchText{
+    width: 100%;
+    border: 0px;
+    padding: 6px;
+    // border-radius: 5px;
+  }
+
+  .flex_box{
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    color: gray;
+    mdb-icon{
+        font-size: 20px;
+        margin-right: 10px;
+    }
+
+    a{
+        font-weight: 500;
+    }
+
+    a:hover{
+        color: #45C261;
+    }
+
+    label {
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+  }
+
+  .flexBoxe{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .cleanSmall{
+    box-shadow: none;
+    line-height: 0px;
+    color: white;
+  }
+
+  .flexer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    .cartBtns{
+      position: relative;
+      padding: 10px;
+      .carts{
+        position: absolute;
+        background: #f27474;
+        height: 20px;
+        width: 20px;
+        font-size: 15px;
+        border-radius: 50%;
+        line-height: 20px;
+        text-align: center;
+        right: 0px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+.stack-top{
+  z-index: 9999;
+  position: absolute;
+  width: 100%;
+  .searchItem{
+    background: white;
+    box-shadow: 0px 0px 12px 0px grey;
+    color: black;
+    p{
+      padding: 10px;
+      margin: 0px;
+      border-bottom: 1px solid lightgray;
+      color: gray;
+      cursor: pointer;
+    }
+    .imgs{
+      height: 20px;
+      width: 20px;
+      margin-right: 10px;
+    }
+  }
+
+}

@@ -1,0 +1,32 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+  <div *ngFor="let item of bottomcategory;" class="btmCates">
+    <p class="cateName" *ngIf="item.subCates.length"> {{item.name}} </p>
+    <div class="row" *ngIf="item.subCates.length">
+      <div class="col-6 col-md-3" *ngFor="let sub of item.subCates">
+        <div class="boxs" (click)="subItems(item,sub)">
+          <div class="img_div" [ngStyle]="{'background-image':'url('+api.mediaURL+sub.cover+')'}">
+          </div>
+          <p class="subName">
+            {{ (sub.name.length>12)? (sub.name | slice:0:12)+'..':(sub.name) }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let item of dummyBottomCates">
+    <p style="text-align: center;">
+      <ngx-skeleton-loader [theme]="{ 'border-radius': '5px', height: '10px',width:'120px'}"></ngx-skeleton-loader>
+    </p>
+    <div class="row" style="overflow: hidden;">
+      <div class="col-4 col-md-3" *ngFor="let item of [1,2,3,4,5,6,7,8]">
+        <ngx-skeleton-loader [theme]="{ 'border-radius': '5px', height: '120px',width:'120px'}"></ngx-skeleton-loader>
+      </div>
+    </div>
+  </div>
+</div>

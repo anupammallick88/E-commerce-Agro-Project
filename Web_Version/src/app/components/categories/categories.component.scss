@@ -1,0 +1,142 @@
+/*
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+*/
+.btmCates{
+  .cateName{
+      text-align: center;
+      color: black;
+      font-weight: 400;
+      border-bottom: 1px solid lightgray;
+      padding-bottom: 10px;
+  }
+  .boxs{
+    border: 2px solid #f1dea4;
+    cursor: pointer;
+    margin-bottom: 5px;
+    .img_div{
+      height: 100px;
+      width: 100%;
+      min-width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: relative;
+      margin: 5px;
+    }
+    .subName{
+      text-align: center;
+      font-size: 12px;
+      margin: 0px;
+      padding: 10px 0px;
+      font-weight: 400;
+    }
+  }
+}
+
+/* iphone X , XS, 11 Pro */
+@media only screen and (min-device-width: 375px) and (max-device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+  .btmCates{
+    .cateName{
+        text-align: center;
+        color: black;
+        font-weight: 400;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 10px;
+    }
+    .boxs{
+      border: 2px solid #f1dea4;
+      cursor: pointer;
+      margin-bottom: 5px;
+      .img_div{
+        height: 50px;
+        width: 100%;
+        min-width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: relative;
+        margin: 5px;
+      }
+      .subName{
+        text-align: center;
+        font-size: 10px;
+        margin: 0px;
+        padding: 10px 0px;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+/* iphone XR, 11 */
+@media only screen and (min-device-width : 414px) and (max-device-height : 896px) and (-webkit-device-pixel-ratio : 2) {
+  .btmCates{
+    .cateName{
+        text-align: center;
+        color: black;
+        font-weight: 400;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 10px;
+    }
+    .boxs{
+      border: 2px solid #f1dea4;
+      cursor: pointer;
+      margin-bottom: 5px;
+      .img_div{
+        height: 50px;
+        width: 100%;
+        min-width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: relative;
+        margin: 5px;
+      }
+      .subName{
+        text-align: center;
+        font-size: 10px;
+        margin: 0px;
+        padding: 10px 0px;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+/* iphone XS Max, 11 Pro Max */
+@media only screen and (min-device-width : 414px) and (max-device-height : 896px) and (-webkit-device-pixel-ratio : 3) {
+  .btmCates{
+    .cateName{
+        text-align: center;
+        color: black;
+        font-weight: 400;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 10px;
+    }
+    .boxs{
+      border: 2px solid #f1dea4;
+      cursor: pointer;
+      margin-bottom: 5px;
+      .img_div{
+        height: 50px;
+        width: 100%;
+        min-width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: relative;
+        margin: 5px;
+      }
+      .subName{
+        text-align: center;
+        font-size: 10px;
+        margin: 0px;
+        padding: 10px 0px;
+        font-weight: 400;
+      }
+    }
+  }
+}

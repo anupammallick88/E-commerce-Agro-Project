@@ -1,0 +1,22 @@
+/*
+  Authors : Anupam Mallick
+  Website : 
+  App Name : Agro App
+  Created : 10-Sep-2021
+  
+*/
+.selectItem{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid lightgray;
+    padding: 5px 0px;
+    .imgs{
+        height: 20px;
+        width: 20px;
+    }
+    .name{
+        font-size: 15px;
+        margin: 0px;
+        margin-left: 15px;
+    }
+}

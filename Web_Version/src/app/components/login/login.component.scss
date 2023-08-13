@@ -1,0 +1,63 @@
+/*
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+*/
+label {
+    display: block;
+}
+
+.form_row{
+    margin-top: 130px;
+}
+.form_div{
+    padding: 25px;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.4);
+
+    .head_title{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 15px;
+        width: 100%;
+
+        label {
+            font-weight: 500;
+            font-size: 26px;
+            text-transform: capitalize;
+            margin: 0;
+        }
+    }
+
+    input{
+        margin-bottom: 15px;
+    }
+
+    .forgot{
+        color: #45C261;
+        font-weight: 400;
+        text-align: right;
+        cursor: pointer;
+    }
+
+    .btn{
+        background: #45C261;
+        color: white;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .bottom_lbl{
+        text-align: center;
+        font-weight: 400;
+        font-size: 15px;
+    }
+
+    .bottom_lbl:hover{
+        color: #45C261;
+    }
+}
+

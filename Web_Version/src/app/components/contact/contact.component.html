@@ -1,0 +1,57 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+
+  <div class="head_title">
+    <label>{{util.getString('Contact US')}} </label>
+  </div>
+
+  <div class="row">
+
+    <div class="col-lg-6">
+
+      <input type="text" class="form-control" [(ngModel)]="contact.name" [placeholder]="util.getString('Full Name')">
+
+      <input type="text" class="form-control" [(ngModel)]="contact.email" [placeholder]="util.getString('Email ID')">
+
+      <textarea class="form-control" rows="5" [(ngModel)]="contact.message"
+        [placeholder]="util.getString('Write Message..')"></textarea>
+
+      <button type="button" mdbWavesEffect mdbBtn class="btn" (click)="submit()">{{util.getString('Submit')}} </button>
+
+    </div>
+
+    <div class="col-lg-6">
+      <div class="address_div" *ngIf="util.general && util.general.address">
+
+        <div class="flex_box">
+          <mdb-icon fas icon="home"></mdb-icon>
+          <label> {{util.general.address}}
+          </label>
+        </div>
+        <div class="flex_box">
+          <mdb-icon fas icon="home"></mdb-icon>
+          <label> {{util.general.city}} - {{util.general.country}} - {{util.general.zip}}
+          </label>
+        </div>
+        <div class="flex_box">
+          <mdb-icon fas icon="envelope"></mdb-icon>
+          <label> {{util.general.email}} </label>
+        </div>
+        <div class="flex_box">
+          <mdb-icon fas icon="phone-alt"></mdb-icon>
+          <label> {{util.general.mobile}} </label>
+        </div>
+        <div class="flex_box">
+          <mdb-icon fas icon="print"></mdb-icon>
+          <label for=""> {{util.general.email}} </label>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

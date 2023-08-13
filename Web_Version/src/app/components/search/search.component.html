@@ -1,0 +1,33 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container" style="display: flex;flex-direction: row;">
+  <input class="form-control" type="text" (keydown.enter)="search($event.target.value)" [(ngModel)]="terms"
+    [ngModelOptions]="{standalone: true}" [placeholder]="util.getString('Search for products')" aria-label="Search"
+    class="searchText">
+  <mdb-icon (click)="search(terms)" fas icon="search" style="padding: 10px;background: #f3f3f3;cursor: pointer;">
+  </mdb-icon>
+</div>
+
+<div class="stack-top" *ngIf="products?.length && terms !==''">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-2"></div>
+      <div class="col-lg-6">
+        <div class="searchItem">
+          <p *ngFor="let item of products" (click)="openProduct(item)">
+            <img class="imgs" [src]="api.mediaURL+item.cover" alt="" onError="this.src='assets/imgs/user.png'">
+            {{item.name}}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-2"></div>
+      <div class="col-lg-1"></div>
+    </div>
+
+  </div>
+</div>

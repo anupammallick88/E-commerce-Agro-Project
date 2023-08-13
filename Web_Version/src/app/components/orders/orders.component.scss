@@ -1,0 +1,127 @@
+/*
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+*/
+label {
+    display: block;
+}
+
+.head_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // border-bottom: 1px solid lightgray;
+    padding-bottom: 10px;
+
+    label {
+        font-weight: 500;
+        font-size: 26px;
+        text-transform: capitalize;
+    }
+
+    .flex_div{
+        display: flex;
+        align-items: center;
+
+        button{
+            background: #45C261;
+            color: white;
+            font-weight: 500;
+            margin-left: 5px;
+            border-radius: 3px;
+            height: 38px;
+            width: 100px;
+        }
+    }
+}
+
+.filter{
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px;
+
+    select{
+        border-radius: 3px;
+        border-color: lightgray;
+        padding: 5px 0px;
+        width: 200px;
+    }
+}
+.dummyCard{
+    border: 1px solid lightgray;
+    margin: 10px 0px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.5);
+    p{
+      margin: 0px;
+    }
+}
+.card_div{
+    padding: 10px;
+    display: flex;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.5);
+    position: relative;
+    margin-bottom: 16px;
+
+    .image_div{
+        height: 95px;
+        width: 95px;
+        min-width: 95px;
+
+        img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
+    .status{
+        position: absolute;
+        right: 0;
+        bottom: 0px;
+        padding: 5px;
+        background: var(--ion-color-primary);;
+        border-bottom-right-radius: 5px;
+        color: white;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .desc_div{
+        width: 100%;
+        .border_bottom{
+            padding-bottom: 10px;
+            width: 100%;
+            .items{
+                margin: 0px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                font-size: 12px;
+                font-weight: bold;
+                padding-bottom: 5px;
+                border-bottom: .5px dashed lightgray;
+                margin-bottom: 5px;
+            }
+            .itemss{
+                margin: 0px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                font-size: 12px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+        }
+
+        .datetime{
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+    }
+}

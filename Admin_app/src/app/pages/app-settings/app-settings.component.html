@@ -1,0 +1,108 @@
+<!--
+   Authors : Anupam Mallick
+  Website : 
+  App Name : Agro Admin App
+  Created : 10-Sep-2021
+  
+ -->
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+    <p style="font-size: 20px; color: #e74c3c">Please wait...</p>
+</ngx-spinner>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5>App Settings </h5>
+            </div>
+            <div class="card-body reset-table p-t-0">
+
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label>Currency Symbol</label>
+                        <input type="text" [(ngModel)]="symbol" class="form-control" placeholder="Currency Symbol">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label>Currency Side </label>
+                        <select name="select" [(ngModel)]="cside" class="form-control">
+                            <option value="left">Left</option>
+                            <option value="right">Right</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label>App Direction</label>
+                        <select name="select" [(ngModel)]="direction" class="form-control">
+                            <option value="ltr">Left to Right</option>
+                            <option value="rtl">Right to Left</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+
+                    <label class="col-sm-4 col-form-label">Upload cover image here</label>
+                    <div class="col-sm-4">
+                        <input (change)="preview_banner($event.target.files)" type="file" class="form-control"
+                            accept="image/*">
+                    </div>
+                    <div class="col-sm-4">
+                        <img [src]="api.mediaURL+ logo" alt="" style="height: 100px;width: 100px;float: right;"
+                            onError="this.src='assets/icon.png'">
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label>Verify On Signup (Send SMS to registered mobile while signup) </label>
+                        <select name="select" [(ngModel)]="twillo" class="form-control">
+                            <option value="1">Enable</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label> SID </label>
+                        <input type="text" [(ngModel)]="creds.sid" class="form-control" placeholder="SID">
+                    </div>
+                    <div class="col-sm-6">
+                        <label> Token </label>
+                        <input type="text" [(ngModel)]="creds.token" class="form-control" placeholder="Token">
+                    </div>
+                    <div class="col-sm-6">
+                        <label> From Number </label>
+                        <input type="text" [(ngModel)]="creds.from" class="form-control" placeholder="From Number">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label>Verify On Delivery (Send SMS registered mobile to customer while receiving orders)
+                        </label>
+                        <select name="select" [(ngModel)]="delivery" class="form-control">
+                            <option value="1">Enable</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-danger btn-round" (click)="submit()">Update</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<ng2-toasty></ng2-toasty>

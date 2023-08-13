@@ -1,0 +1,50 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+
+  <div class="row form_row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+
+      <div class="form_div">
+
+        <div class="head_title">
+          <label>{{util.getString('Reset Password')}} </label>
+        </div>
+
+
+
+        <div *ngIf="currentDiv === 1">
+          <input type="email" [placeholder]="util.getString('Email')" [(ngModel)]="email" class="form-control">
+          <button type="button" class="btn" (click)="sendOTP()">{{util.getString('Send OTP')}} </button>
+        </div>
+
+        <div *ngIf="currentDiv === 2">
+          <input type="number" [placeholder]="util.getString('OTP')" [(ngModel)]="otp" class="form-control">
+          <button type="button" class="btn" (click)="verifyOTP()">{{util.getString('Verify OTP')}} </button>
+        </div>
+
+        <div *ngIf="currentDiv === 3">
+          <input type="password" [placeholder]="util.getString('New Password')" [(ngModel)]="password"
+            class="form-control">
+          <input type="password" [placeholder]="util.getString('Confirm Password')" [(ngModel)]="repass"
+            class="form-control">
+
+          <button type="button" class="btn" (click)="sendEmail()">{{util.getString('Reset Password')}} </button>
+        </div>
+
+        <hr>
+
+        <label class="bottom_lbl" (click)="login()" *ngIf="!util.userInfo">{{util.getString('Login Back')}} </label>
+
+      </div>
+
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+
+</div>

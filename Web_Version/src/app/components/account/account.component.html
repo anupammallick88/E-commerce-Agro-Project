@@ -1,0 +1,177 @@
+<!-- 
+Authors : Anupam Mallick
+Website : 
+App Name : Agro Web App
+Created : 20-Nov-2021
+ -->
+<div class="container">
+  <div mdbModal #addressModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myBasicModalLabel" aria-hidden="true" style="z-index: 9999;">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="addressModal.hide()">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel">
+            <span *ngIf="newAddress === true"> {{util.getString('Create Address')}} </span>
+            <span *ngIf="newAddress === false"> {{util.getString('Update Address')}} </span>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="md-form">
+            <input id="text" [(ngModel)]="address" class="form-control" type="text" mdbInput>
+            <label for="text"> {{util.getString('LOCATIONS')}} </label>
+          </div>
+          <div class="md-form">
+            <input id="house" [(ngModel)]="house" class="form-control" type="text" mdbInput>
+            <label for="house"> {{util.getString('HOUSE / FLAT NO')}} </label>
+          </div>
+          <div class="md-form">
+            <input id="landmark" [(ngModel)]="landmark" class="form-control" type="text" mdbInput>
+            <label for="landmark"> {{util.getString('LANDMARK')}} </label>
+          </div>
+          <div class="md-form">
+            <input id="pincode" [(ngModel)]="pincode" class="form-control" type="text" mdbInput>
+            <label for="pincode"> {{util.getString('Pincode')}} </label>
+          </div>
+          <div class="md-form">
+            <select class="browser-default custom-select" [(ngModel)]="title">
+              <option value="home"> {{util.getString('HOME')}} </option>
+              <option value="work"> {{util.getString('WORK')}} </option>
+              <option value="other"> {{util.getString('OTHER')}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+            (click)="addressModal.hide()" mdbWavesEffect> {{util.getString('Close')}} </button>
+          <button type="button" (click)="actionAddress()" mdbBtn color="primary" class="relative waves-light"
+            mdbWavesEffect>
+            <span *ngIf="newAddress === true"> {{util.getString('Save')}} </span>
+            <span *ngIf="newAddress === false"> {{util.getString('Update')}} </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="head_title">
+    <label> {{util.getString('Your Account')}} </label>
+  </div>
+
+  <div class="row">
+
+    <div class="col-lg-3 col-md-12 sidemenu">
+
+      <div class="my_col" (click)="openProfile()">
+        <div class="icn_div">
+          <mdb-icon fas icon="user-circle"></mdb-icon>
+        </div>
+        <div class="right_div">
+          <label class="title_lbl"> {{util.getString('Your Profile')}} </label>
+        </div>
+      </div>
+
+      <div class="my_col" (click)="goToOrder()">
+        <div class="icn_div">
+          <mdb-icon fas icon="shipping-fast"></mdb-icon>
+        </div>
+        <div class="right_div">
+          <label class="title_lbl"> {{util.getString('Your Order')}} </label>
+        </div>
+      </div>
+
+      <div class="my_col" (click)="goChat()">
+        <div class="icn_div">
+          <mdb-icon fas icon="comments"></mdb-icon>
+        </div>
+        <div class="right_div">
+          <label class="title_lbl"> {{util.getString('Chats')}} </label>
+        </div>
+      </div>
+
+      <div class="my_col" (click)="goToAddress()">
+        <div class="icn_div">
+          <mdb-icon fas icon="map-marker-alt"></mdb-icon>
+        </div>
+
+        <div class="right_div">
+          <label class="title_lbl"> {{util.getString('Your Address')}} </label>
+        </div>
+      </div>
+
+      <div class="my_col" (click)="reset()">
+        <div class="icn_div">
+          <mdb-icon fas icon="keyboard"></mdb-icon>
+        </div>
+        <div class="right_div">
+          <label class="title_lbl"> {{util.getString('Change Password')}} </label>
+        </div>
+      </div>
+
+      <div class="my_col" (click)="logout()">
+        <div class="icn_div">
+          <mdb-icon fas icon="lock"></mdb-icon>
+        </div>
+        <div class="right_div">
+          <label class="title_lbl"> {{util.getString('Logout')}} </label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-9 col-md-12">
+      <!-- User Informations -->
+      <div class="row user_div" *ngIf="currentDiv === 1">
+        <div class="centeredItem">
+          <div class="image-upload">
+            <label for="file-input">
+              <img [src]="api.mediaURL+profile" onError="this.src='assets/imgs/user.png'" class="img-circle" width="150"
+                height="150" />
+            </label>
+
+            <input id="file-input" (change)="preview_banner($event.target.files)" type="file" />
+          </div>
+        </div>
+        <div class="row form_div">
+          <div class="col-lg-6 class_col">
+            <input type="text" [(ngModel)]="fname" class="form-control">
+          </div>
+          <div class="col-lg-6 class_col">
+            <input type="text" [(ngModel)]="lname" class="form-control">
+          </div>
+          <div class="col-lg-6 class_col">
+            <input type="email" [disabled]="true" [(ngModel)]="email" class="form-control">
+          </div>
+          <div class="col-lg-6 class_col">
+            <input type="tel" [(ngModel)]="mobile" class="form-control">
+          </div>
+          <div class="col-12">
+            <div class="submitBtn">
+              <button type="button" (click)="update()" mdbWavesEffect mdbBtn class="btn">
+                {{util.getString('Update Profile')}} </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- User Informations -->
+      <div *ngIf="currentDiv === 2">
+        <div class="addNewBtn">
+          <button type="button" (click)="addNewAddress()" mdbWavesEffect mdbBtn class="btn">
+            {{util.getString('Add New Address')}} </button>
+        </div>
+        <div class="my_col_address" *ngFor="let item of myaddress">
+          <label class="bold_lbl2">{{item.title}}</label>
+
+          <label class="small_lbl">{{item.house}} - {{item.landmark}} - {{item.address}}</label>
+
+          <div class="action_div">
+            <label (click)="updateAddress(item)"> {{util.getString('Edit Address')}} </label>
+            <label (click)="deleteAddress(item)">{{util.getString('Delete Address')}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
